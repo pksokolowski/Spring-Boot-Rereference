@@ -8,21 +8,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Hello {
 
-    private final Greeter greeter;
+    private final UserRepository userRepository;
 
     @Autowired
-    public Hello( Greeter greeter) {
-        this.greeter = greeter;
+    public Hello(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @RequestMapping("/")
     public String greet() {
-        return greeter.greet();
+        var users = userRepository.findAll();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("hello: <br>");
+        users.forEach(user -> {
+            sb.append(user.getName());
+            sb.append("<br>");
+        });
+
+        return sb.toString();
     }
 
-    @RequestMapping("/get/{name}")
+    @RequestMapping("/addUser/{name}")
     public String greetElastically(@PathVariable("name") String name) {
-        return greeter.greet() + " " + name;
+        var user = new User(1, name);
+        userRepository.save(user);
+
+        return "the name has been saved";
     }
 
     @RequestMapping("/hey")
