@@ -30,15 +30,11 @@ public class Hello {
     }
 
     @RequestMapping("/addUser/{name}")
-    public String greetElastically(@PathVariable("name") String name) {
-        var user = new User(1, name);
+    public String addUser(@PathVariable("name") String name) {
+        var user = new User(0, name);
         userRepository.save(user);
 
         return "the name has been saved";
     }
 
-    @RequestMapping("/hey")
-    public String noFrillsGreeting() {
-        return "Hey";
-    }
 }

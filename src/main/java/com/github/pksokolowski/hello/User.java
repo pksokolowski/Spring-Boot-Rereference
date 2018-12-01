@@ -29,7 +29,7 @@ public class User {
     }
 
     public User(){
-        id = 1;
+        id = 0;
         name = "unknown";
     }
 
