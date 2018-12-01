@@ -1,6 +1,7 @@
 package com.github.pksokolowski.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,11 @@ public class Hello {
     @RequestMapping("/")
     public String greet() {
         return greeter.greet();
+    }
+
+    @RequestMapping("/get/{name}")
+    public String greetElastically(@PathVariable("name") String name) {
+        return greeter.greet() + " " + name;
     }
 
     @RequestMapping("/hey")
