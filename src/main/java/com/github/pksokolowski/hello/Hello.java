@@ -31,10 +31,13 @@ public class Hello {
 
     @RequestMapping("/addUser/{name}")
     public String addUser(@PathVariable("name") String name) {
-        var user = new User(0, name);
-        userRepository.save(user);
-
-        return "the name has been saved";
+        var user = new User(name);
+        try {
+            userRepository.save(user);
+        }catch (Exception e){
+            return "an error occurred while saving the name.";
+        }
+        return "the name has been successfully saved";
     }
 
 }
