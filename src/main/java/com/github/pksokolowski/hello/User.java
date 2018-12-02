@@ -1,11 +1,11 @@
 package com.github.pksokolowski.hello;
 
-import javax.persistence.Column;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import java.util.Objects;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -14,11 +14,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = AUTO)
-    @Column
     private long id;
 
-    @Column(name = "name")
     private String name;
+
+    public User() {
+        name = "unknown";
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;
@@ -28,27 +34,24 @@ public class User {
         return name;
     }
 
-    public User(){
-        id = 0;
-        name = "unknown";
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        User rhs = (User) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(id, rhs.id)
+                .append(name, rhs.name)
+                .isEquals();
     }
 
-    public User(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(name, user.name);
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return new HashCodeBuilder(13, 39)
+                .append(id)
+                .append(name)
+                .toHashCode();
     }
 }
