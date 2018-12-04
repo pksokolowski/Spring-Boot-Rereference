@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @RestController
 public class Hello {
 
@@ -39,5 +43,19 @@ public class Hello {
         }
         return "the name has been successfully saved";
     }
+
+    /**
+     * Gets users with a given initial, in form of a JSON array.
+     * @param initial a String containing the initial, in fact more than one initial letter can be used.
+     * @return a JSON array of users whose names match the initial string provided.
+     */
+    @RequestMapping("/getUsers/{initial}")
+    public Collection<User> getJsonList(@PathVariable("initial") String initial) {
+        Function<User, Boolean> matchesInitial = u -> u.getName().substring(0, initial.length()).equals(initial);
+        return userRepository.findAll().stream()
+                .filter(matchesInitial::apply)
+                .collect(Collectors.toList());
+    }
+
 
 }
