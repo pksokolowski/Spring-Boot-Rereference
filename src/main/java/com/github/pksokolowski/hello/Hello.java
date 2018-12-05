@@ -1,10 +1,12 @@
 package com.github.pksokolowski.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -51,7 +53,8 @@ public class Hello {
      * @return a JSON array of users whose names match the initial string provided.
      */
     @RequestMapping("/getUsers/{initial}")
-    public Collection<User> getJsonList(@PathVariable("initial") String initial) {
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Collection<User> getUsersWithInitial(@PathVariable("initial") String initial) {
         Function<User, Boolean> matchesInitial = u -> {
             final var name = u.getName();
             final var initialLen = initial.length();
@@ -63,5 +66,15 @@ public class Hello {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Fetches all users.
+     *
+     * @return a JSON list of all users.
+     */
+    @RequestMapping("/getAllUsers")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Collection<User> getAllUsers() {
+        return new ArrayList<>(userRepository.findAll());
+    }
 
 }
