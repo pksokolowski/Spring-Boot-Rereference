@@ -14,4 +14,11 @@ export class UserService {
   getAllUsers(): Observable<any> {
     return this.http.get('//localhost:8080/getAllUsers');
   }
+
+  postUser(name: String){
+    this.http.post('//localhost:8080/postUser', {
+      name: name
+    }).subscribe(
+    )
+  }
 }

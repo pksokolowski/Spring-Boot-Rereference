@@ -17,4 +17,7 @@ export class UsersListComponent implements OnInit {
     });
   }
 
+  addUser(userName: String){
+    this.userService.postUser(userName)
+  }
 }

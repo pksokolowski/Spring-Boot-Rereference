@@ -1,6 +1,11 @@
 <mat-card>
   <mat-card-header>Users:</mat-card-header>
   <mat-card-content>
+      <mat-form-field class="example-full-width">
+          <input #usernameInput matInput placeholder="New user's name" value="">
+        </mat-form-field>
+    <button (click)="addUser(usernameInput.value)" mat-fab color="primary" id="addUser" >Add</button>
+    <br>
     <mat-list>
       <mat-list-item *ngFor="let user of users">    
         <h3 mat-line>{{user.name}}</h3>

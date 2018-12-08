@@ -1,10 +1,7 @@
 package com.github.pksokolowski.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +41,15 @@ public class Hello {
             return "an error occurred while saving the name.";
         }
         return "the name has been successfully saved";
+    }
+
+
+    @RequestMapping(value = "/postUser", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:4200")
+    public void postUser(@RequestBody User user) {
+        try {
+            userRepository.save(user);
+        } catch (Exception ignored){}
     }
 
     /**
