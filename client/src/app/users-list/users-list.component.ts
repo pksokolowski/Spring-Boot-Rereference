@@ -20,4 +20,8 @@ export class UsersListComponent implements OnInit {
   addUser(userName: String){
     this.userService.postUser(userName)
   }
+
+  deleteUser(user: any){
+    this.userService.deleteUser(user)
+  }
 }

@@ -21,4 +21,12 @@ export class UserService {
     }).subscribe(
     )
   }
+
+  deleteUser(user: any){
+    this.http.post('//localhost:8080/deleteUser', {
+      id: user.id,
+      name: user.name
+    }).subscribe(
+    )
+  }
 }

@@ -52,6 +52,17 @@ public class Hello {
         } catch (Exception ignored){}
     }
 
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    @CrossOrigin(origins = "http://localhost:4200")
+    public void deleteUser(@RequestBody User user) {
+        try {
+            userRepository.deleteById(user.getId());
+        } catch (Exception ignored){
+            Integer heee = 3;
+            heee+=1;
+        }
+    }
+
     /**
      * Gets users with a given initial, in form of a JSON array.
      *
