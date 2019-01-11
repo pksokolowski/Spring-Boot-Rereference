@@ -1,6 +1,7 @@
 package com.github.pksokolowski.hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.stream.Collectors;
 
 @RestController
 public class Hello {
+
+    @Value("${custom.property.title}")
+    private String someTitle;
 
     private final UserRepository userRepository;
 
@@ -23,7 +27,7 @@ public class Hello {
         var users = userRepository.findAll();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("hello: <br>");
+        sb.append(String.format("hello: %s<br>", someTitle));
         users.forEach(user -> {
             sb.append(user.getName());
             sb.append("<br>");
